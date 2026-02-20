@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consórcio Especialista | Embracon, Itaú e Santander</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1>Consórcio <span>Especialista</span></h1>
+            <p>Representante Autorizado: Embracon, Itaú e Santander</p>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container flex">
+            <div class="hero-text">
+                <h2>Realize seus planos sem pagar juros abusivos.</h2>
+                <p>Compare as melhores condições do mercado em um só lugar. Consultoria gratuita e personalizada.</p>
+                <ul class="benefits-top">
+                    <li>✅ Zero Juros</li>
+                    <li>✅ Sem Taxa de Adesão</li>
+                    <li>✅ Aprovação Facilitada</li>
+                </ul>
+            </div>
+
+            <div class="form-container">
+                <h3>Simule seu Crédito</h3>
+                <form id="formConsorcio" action="https://formspree.io/f/xeellvzg" method="POST">
+                    
+                    <label>Nome Completo</label>
+                    <input type="text" name="nome" placeholder="Digite seu nome" required>
+
+                    <label>WhatsApp</label>
+                    <input type="tel" name="whatsapp" placeholder="(00) 00000-0000" required>
+
+                    <label>E-mail</label>
+                    <input type="email" name="_replyto" placeholder="seu@email.com" required>
+
+                    <label>O que deseja conquistar?</label>
+                    <select name="interesse" id="interesse" required>
+                        <option value="">Selecione uma opção</option>
+                        <option value="Imóvel">Imóvel</option>
+                        <option value="Auto">Automóvel</option>
+                        <option value="Moto">Moto</option>
+                        <option value="Pesados">Veículos Pesados</option>
+                    </select>
+
+                    <div id="area-valor" style="display: none; margin-top: 15px;">
+                        <label>Valor do Crédito: <span id="valor-exibido">R$ 0,00</span></label>
+                        <input type="range" name="valor_pretendido" id="range-valor" min="0" max="100000" step="1000">
+                        <div class="range-labels">
+                            <span id="min-label">R$ 0</span>
+                            <span id="max-label">R$ 0</span>
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="_subject" value="Novo Lead: Simulação de Consórcio">
+                    <button type="submit" class="btn-submit">SIMULAR VIA WHATSAPP</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="info-sections">
+        <div class="container">
+            <div class="info-grid">
+                <div class="info-box">
+                    <h3>Benefícios do Consórcio</h3>
+                    <ul class="lista-check">
+                        <li><strong>Sem Juros:</strong> Apenas uma taxa administrativa diluída.</li>
+                        <li><strong>Poder de Compra:</strong> Negocie descontos comprando à vista.</li>
+                        <li><strong>Flexibilidade:</strong> Use o crédito para qualquer marca ou modelo.</li>
+                        <li><strong>FGTS:</strong> Use seu saldo para dar lances ou amortizar parcelas.</li>
+                    </ul>
+                </div>
+
+                <div class="info-box">
+                    <h3>Consórcio vs Financiamento</h3>
+                    <table class="comp-table">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Consórcio</th>
+                                <th>Financiamento</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Juros</td>
+                                <td>Isento</td>
+                                <td>Média 12% a 40% a.a.</td>
+                            </tr>
+                            <tr>
+                                <td>Entrada</td>
+                                <td>R$ 0,00</td>
+                                <td>Média 20% do valor</td>
+                            </tr>
+                            <tr>
+                                <td>Custo Final</td>
+                                <td>Baixo</td>
+                                <td>Até 3x o valor do bem</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="atendimento-nacional">
+                <h3>🌎 Atendimento em Todo Território Nacional</h3>
+                <p>Nossa consultoria é 100% digital e segura. Atendemos clientes de todos os estados do Brasil com a solidez das maiores administradoras do país.</p>
+                <div class="badge-brasil">🇧🇷 100% SEGURO</div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>Parceiros Autorizados: <strong>Embracon | Itaú | Santander</strong></p>
+            <p>&copy; 2026 - Especialista em Consórcios. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        const selectInteresse = document.getElementById('interesse');
+        const areaValor = document.getElementById('area-valor');
+        const rangeValor = document.getElementById('range-valor');
+        const valorExibido = document.getElementById('valor-exibido');
+        const minLabel = document.getElementById('min-label');
+        const maxLabel = document.getElementById('max-label');
+
+        const configs = {
+            'Imóvel': { min: 90000, max: 1000000, step: 10000 },
+            'Auto': { min: 30000, max: 150000, step: 5000 },
+            'Moto': { min: 10000, max: 70000, step: 1000 },
+            'Pesados': { min: 150000, max: 350000, step: 10000 }
+        };
+
+        function formatarMoeda(v) {
+            return Number(v).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
+        }
+
+        selectInteresse.addEventListener('change', function() {
+            const c = configs[this.value];
+            if (c) {
+                areaValor.style.display = 'block';
+                rangeValor.min = c.min;
+                rangeValor.max = c.max;
+                rangeValor.step = c.step;
+                rangeValor.value = c.min;
+                minLabel.innerText = formatarMoeda(c.min);
+                maxLabel.innerText = formatarMoeda(c.max);
+                valorExibido.innerText = formatarMoeda(c.min);
+            } else {
+                areaValor.style.display = 'none';
+            }
+        });
+
+        rangeValor.addEventListener('input', function() {
+            valorExibido.innerText = formatarMoeda(this.value);
+        });
+
+        document.getElementById('formConsorcio').addEventListener('submit', function(e) {
+            const nome = document.querySelector('input[name="nome"]').value;
+            const interesse = selectInteresse.value;
+            const valor = valorExibido.innerText;
+            
+            const meuNumero = "5511998884144"; // <--- TROQUE PELO SEU NÚMERO
+            const msg = `Olá! Meu nome é ${nome}. Quero uma proposta de consórcio para ${interesse} no valor de ${valor}.`;
+            const url = `https://wa.me/${meuNumero}?text=${encodeURIComponent(msg)}`;
+
+            setTimeout(() => { window.location.href = url; }, 1200);
+        });
+    </script>
+</body>
+</html>

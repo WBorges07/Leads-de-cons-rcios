@@ -1,0 +1,72 @@
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
+body { background-color: #f4f7f6; color: #333; line-height: 1.6; }
+.container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+/* Header */
+header { background: #fff; padding: 20px 0; text-align: center; border-bottom: 4px solid #004a8e; }
+header h1 span { color: #ec7000; }
+
+/* Hero Section */
+.hero {
+    padding: 60px 0;
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1350&q=80');
+    background-size: cover;
+    color: white;
+}
+
+.flex { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 30px; }
+.hero-text { flex: 1; min-width: 300px; }
+.hero-text h2 { font-size: 2.5rem; margin-bottom: 20px; color: #fff; }
+.benefits-top { list-style: none; margin-top: 20px; }
+.benefits-top li { font-size: 1.2rem; margin-bottom: 10px; }
+
+/* Formulário */
+.form-container {
+    background: #fff; padding: 30px; border-radius: 10px;
+    width: 100%; max-width: 420px; color: #333; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+.form-container h3 { color: #004a8e; text-align: center; margin-bottom: 20px; }
+label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.85rem; }
+input, select { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; }
+
+/* Slider */
+input[type="range"] { width: 100%; margin: 10px 0; cursor: pointer; }
+.range-labels { display: flex; justify-content: space-between; font-size: 0.7rem; color: #777; }
+#valor-exibido { color: #28a745; font-size: 1.3rem; font-weight: bold; }
+
+.btn-submit {
+    width: 100%; padding: 18px; background: #28a745; color: white; border: none;
+    border-radius: 5px; font-weight: bold; cursor: pointer; transition: 0.3s;
+}
+.btn-submit:hover { background: #218838; }
+
+/* Seções Inferiores */
+.info-sections { padding: 60px 0; background: #fff; }
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 50px; }
+.info-box h3 { color: #004a8e; margin-bottom: 20px; border-bottom: 2px solid #ec7000; display: inline-block; }
+
+.lista-check { list-style: none; }
+.lista-check li { margin-bottom: 12px; }
+.lista-check li::before { content: "✓ "; color: #28a745; font-weight: bold; }
+
+.comp-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.comp-table th, .comp-table td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+.comp-table th { background: #f8f8f8; }
+
+.atendimento-nacional { text-align: center; padding: 40px; background: #f4f7f6; border-radius: 10px; }
+.badge-brasil { 
+    display: inline-block; margin-top: 15px; background: #004a8e; 
+    color: white; padding: 8px 25px; border-radius: 50px; font-weight: bold; 
+}
+
+/* Footer */
+footer { background: #222; color: #999; padding: 40px 0; text-align: center; font-size: 0.9rem; }
+footer strong { color: #fff; }
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .flex { flex-direction: column; text-align: center; }
+    .info-grid { grid-template-columns: 1fr; }
+    .hero-text h2 { font-size: 1.8rem; }
+}
