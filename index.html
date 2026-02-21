@@ -93,17 +93,22 @@
                             <tr>
                                 <td>Juros</td>
                                 <td>Isento</td>
-                                <td>Média 12% a 40% a.a.</td>
+                                <td>Média 7,5% a 12% a.a.</td>
                             </tr>
                             <tr>
                                 <td>Entrada</td>
                                 <td>R$ 0,00</td>
-                                <td>Média 20% do valor</td>
+                                <td>Média 40% do valor</td>
                             </tr>
                             <tr>
                                 <td>Custo Final</td>
                                 <td>Baixo</td>
                                 <td>Até 3x o valor do bem</td>
+                            </tr>
+                            <tr>
+                                <td>Prazo máximo</td>
+                                <td>200 meses - 16 anos</td>
+                                <td>420 meses - 35 anos</td>
                             </tr>
                         </tbody>
                     </table>
@@ -176,5 +181,59 @@
             setTimeout(() => { window.location.href = url; }, 1200);
         });
     </script>
+    <a href="https://wa.me/5511998884144" class="whatsapp-btn" target="_blank">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+</a>
+
+<style>
+.whatsapp-btn {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 25px;
+    right: 25px;
+    background-color: #25d366;
+    color: #FFF;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 30px;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.whatsapp-btn:hover {
+    transform: scale(1.1);
+    background-color: #128c7e;
+}
+
+.whatsapp-btn img {
+    width: 35px;
+}
+
+/* Garante que o botão não cubra textos em telas muito pequenas */
+@media (max-width: 768px) {
+    .whatsapp-btn {
+        width: 50px;
+        height: 50px;
+        bottom: 15px;
+        right: 15px;
+    }
+}
+</style>
+<footer style="background: #f8f9fa; padding: 40px 20px; text-align: center; border-top: 1px solid #ddd; margin-top: 50px;">
+    <div style="max-width: 1000px; margin: 0 auto; color: #666; font-size: 13px; line-height: 1.6;">
+        <p><strong>© 2026 - Especialista em Consórcios</strong></p>
+        <p>As simulações apresentadas são estimativas. As condições finais dependem da análise de crédito e disponibilidade de cotas junto às administradoras parceiras (Embracon, Itaú e Santander).</p>
+        <p style="margin: 15px 0;">
+            <a href="#" style="color: #004a8e; text-decoration: none;">Termos de Uso</a> | 
+            <a href="#" style="color: #004a8e; text-decoration: none;">Política de Privacidade</a>
+        </p>
+        <p>Seus dados estão protegidos conforme a LGPD e serão utilizados apenas para o envio da simulação solicitada.</p>
+    </div>
+</footer>
 </body>
 </html>
