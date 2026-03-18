@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consórcio Especialista | Embracon, Itaú e Santander</title>
+    <title>M.Braaam Consórcios | Embracon, Itaú e Santander</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
@@ -11,7 +12,7 @@
 
     <header>
         <div class="container">
-            <h1>Consórcio <span>Especialista</span></h1>
+            <img src="logo.png" alt="M.Braaam Consórcios" class="main-logo">
             <p>Representante Autorizado: Embracon, Itaú e Santander</p>
         </div>
     </header>
@@ -20,7 +21,7 @@
         <div class="container flex">
             <div class="hero-text">
                 <h2>Realize seus planos sem pagar juros abusivos.</h2>
-                <p>Compare as melhores condições do mercado em um só lugar. Consultoria gratuita e personalizada.</p>
+                <p>Compare as melhores condições do mercado em um só lugar. Consultoria gratuita e personalizada com a Caçula Consórcios.</p>
                 <ul class="benefits-top">
                     <li>✅ Zero Juros</li>
                     <li>✅ Sem Taxa de Adesão</li>
@@ -59,7 +60,7 @@
                         </div>
                     </div>
 
-                    <input type="hidden" name="_subject" value="Novo Lead: Simulação de Consórcio">
+                    <input type="hidden" name="_subject" value="Novo Lead: Caçula Consórcios">
                     <button type="submit" class="btn-submit">SIMULAR VIA WHATSAPP</button>
                 </form>
             </div>
@@ -107,8 +108,8 @@
                             </tr>
                             <tr>
                                 <td>Prazo máximo</td>
-                                <td>200 meses - 16 anos</td>
-                                <td>420 meses - 35 anos</td>
+                                <td>200 meses</td>
+                                <td>420 meses</td>
                             </tr>
                         </tbody>
                     </table>
@@ -117,21 +118,30 @@
 
             <div class="atendimento-nacional">
                 <h3>🌎 Atendimento em Todo Território Nacional</h3>
-                <p>Nossa consultoria é 100% digital e segura. Atendemos clientes de todos os estados do Brasil com a solidez das maiores administradoras do país.</p>
+                <p>Nossa consultoria é 100% digital e segura com a Caçula Consórcios. Atendemos todos os estados do Brasil.</p>
                 <div class="badge-brasil">🇧🇷 100% SEGURO</div>
             </div>
         </div>
     </section>
 
-    <footer>
-        <div class="container">
-            <p>Parceiros Autorizados: <strong>Embracon | Itaú | Santander</strong></p>
-            <p>&copy; 2026 - Especialista em Consórcios. Todos os direitos reservados.</p>
+    <footer style="background: #f8f9fa; padding: 40px 20px; text-align: center; border-top: 1px solid #ddd; margin-top: 50px;">
+        <div style="max-width: 1000px; margin: 0 auto; color: #666; font-size: 13px; line-height: 1.6;">
+            <p><strong>© 2026 - M.Braaam Consórcios</strong></p>
+            <p>As simulações apresentadas são estimativas. As condições finais dependem da análise de crédito junto às administradoras parceiras.</p>
+            <p style="margin: 15px 0;">
+                <a href="#" style="color: #1aa13c; text-decoration: none;">Termos de Uso</a> | 
+                <a href="#" style="color: #1aa13c; text-decoration: none;">Política de Privacidade</a>
+            </p>
+            <p>Seus dados estão protegidos conforme a LGPD.</p>
         </div>
     </footer>
 
+    <a href="https://wa.me/5511998884144" class="whatsapp-btn" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+    </a>
+
     <script>
-        const selectInteresse = document.getElementById('interesse');
+        const selectInteresse = document.getElementById('interest'); // Corrigido para ID do HTML
         const areaValor = document.getElementById('area-valor');
         const rangeValor = document.getElementById('range-valor');
         const valorExibido = document.getElementById('valor-exibido');
@@ -149,7 +159,7 @@
             return Number(v).toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
         }
 
-        selectInteresse.addEventListener('change', function() {
+        document.getElementById('interesse').addEventListener('change', function() {
             const c = configs[this.value];
             if (c) {
                 areaValor.style.display = 'block';
@@ -171,69 +181,15 @@
 
         document.getElementById('formConsorcio').addEventListener('submit', function(e) {
             const nome = document.querySelector('input[name="nome"]').value;
-            const interesse = selectInteresse.value;
+            const interesse = document.getElementById('interesse').value;
             const valor = valorExibido.innerText;
             
-            const meuNumero = "5511998884144"; // <--- TROQUE PELO SEU NÚMERO
-            const msg = `Olá! Meu nome é ${nome}. Quero uma proposta de consórcio para ${interesse} no valor de ${valor}.`;
+            const meuNumero = "5511998884144";
+            const msg = `Olá! Meu nome é ${nome}. Quero uma proposta da Caçula Consórcios para ${interesse} no valor de ${valor}.`;
             const url = `https://wa.me/${meuNumero}?text=${encodeURIComponent(msg)}`;
 
             setTimeout(() => { window.location.href = url; }, 1200);
         });
     </script>
-    <a href="https://wa.me/5511998884144" class="whatsapp-btn" target="_blank">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
-</a>
-
-<style>
-.whatsapp-btn {
-    position: fixed;
-    width: 60px;
-    height: 60px;
-    bottom: 25px;
-    right: 25px;
-    background-color: #25d366;
-    color: #FFF;
-    border-radius: 50px;
-    text-align: center;
-    font-size: 30px;
-    box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.3s ease;
-}
-
-.whatsapp-btn:hover {
-    transform: scale(1.1);
-    background-color: #128c7e;
-}
-
-.whatsapp-btn img {
-    width: 35px;
-}
-
-/* Garante que o botão não cubra textos em telas muito pequenas */
-@media (max-width: 768px) {
-    .whatsapp-btn {
-        width: 50px;
-        height: 50px;
-        bottom: 15px;
-        right: 15px;
-    }
-}
-</style>
-<footer style="background: #f8f9fa; padding: 40px 20px; text-align: center; border-top: 1px solid #ddd; margin-top: 50px;">
-    <div style="max-width: 1000px; margin: 0 auto; color: #666; font-size: 13px; line-height: 1.6;">
-        <p><strong>© 2026 - Especialista em Consórcios</strong></p>
-        <p>As simulações apresentadas são estimativas. As condições finais dependem da análise de crédito e disponibilidade de cotas junto às administradoras parceiras (Embracon, Itaú e Santander).</p>
-        <p style="margin: 15px 0;">
-            <a href="#" style="color: #004a8e; text-decoration: none;">Termos de Uso</a> | 
-            <a href="#" style="color: #004a8e; text-decoration: none;">Política de Privacidade</a>
-        </p>
-        <p>Seus dados estão protegidos conforme a LGPD e serão utilizados apenas para o envio da simulação solicitada.</p>
-    </div>
-</footer>
 </body>
 </html>
