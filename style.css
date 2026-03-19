@@ -1,9 +1,12 @@
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
-body { background-color: #f4f7f6; color: #333; line-height: 1.6; }
+
+/* Nova cor de fundo dourada baseada na imagem de modelo */
+body { background-color: #fcfcfc; color: #333; line-height: 1.6; }
+
 .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
 
 /* Header */
-header { background: #fff; padding: 15px 0; text-align: center; border-bottom: 4px solid #1aa13c; }
+header { background: #ffffff; padding: 15px 0; text-align: center; border-bottom: 4px solid #fffafa; }
 .main-logo { max-width: 180px; height: auto; margin-bottom: 10px; }
 header p { font-size: 0.9rem; color: #666; font-weight: bold; }
 
@@ -43,9 +46,10 @@ input[type="range"] { width: 100%; margin: 10px 0; cursor: pointer; accent-color
 }
 .btn-submit:hover { background: #147a2d; transform: translateY(-2px); }
 
-/* Seções Inferiores */
-.info-sections { padding: 80px 0; background: #fff; }
+/* Seções Inferiores com o novo fundo dourado aplicado */
+.info-sections { padding: 80px 0; background: transparent; }
 .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; margin-bottom: 60px; }
+.info-box { background: rgba(255, 255, 255, 0.6); padding: 25px; border-radius: 10px; }
 .info-box h3 { color: #000; margin-bottom: 25px; border-bottom: 3px solid #1aa13c; display: inline-block; padding-bottom: 5px; }
 
 .lista-check { list-style: none; }
@@ -53,11 +57,11 @@ input[type="range"] { width: 100%; margin: 10px 0; cursor: pointer; accent-color
 .lista-check li::before { content: "✓ "; color: #1aa13c; font-weight: bold; margin-right: 8px; }
 
 .comp-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
-.comp-table th, .comp-table td { border: 1px solid #eee; padding: 15px; text-align: left; }
+.comp-table th, .comp-table td { border: 1px solid rgba(0,0,0,0.1); padding: 15px; text-align: left; }
 .comp-table th { background: #000; color: #fff; }
-.comp-table tr:nth-child(even) { background: #f9f9f9; }
+.comp-table tr { background: rgba(255, 255, 255, 0.4); }
 
-.atendimento-nacional { text-align: center; padding: 50px; background: #f4f7f6; border-radius: 15px; border: 1px solid #e0e0e0; }
+.atendimento-nacional { text-align: center; padding: 50px; background: rgba(255, 255, 255, 0.5); border-radius: 15px; border: 1px solid rgba(0,0,0,0.1); }
 .badge-brasil { 
     display: inline-block; margin-top: 20px; background: #000; 
     color: white; padding: 10px 30px; border-radius: 50px; font-weight: bold; 
@@ -71,6 +75,10 @@ input[type="range"] { width: 100%; margin: 10px 0; cursor: pointer; accent-color
 }
 .whatsapp-btn:hover { transform: scale(1.1); background-color: #128c7e; }
 .whatsapp-btn img { width: 38px; }
+
+/* Footer */
+footer { background: #222; color: #999; padding: 40px 0; text-align: center; font-size: 0.9rem; }
+footer strong { color: #fff; }
 
 /* Responsividade */
 @media (max-width: 768px) {

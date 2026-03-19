@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M.Braaam Consórcios | Embracon, Itaú e Santander</title>
+    <title>Consórcio M.Braaam. | Banco do Brasil, Itaú e Embracon</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
@@ -12,8 +12,8 @@
 
     <header>
         <div class="container">
-            <img src="logo.png" alt="M.Braaam Consórcios" class="main-logo">
-            <p>Representante Autorizado: Embracon, Itaú e Santander</p>
+            <img src="logo.png" alt="Caçula Consórcios" class="main-logo">
+            <p>Representante Autorizado: Banco do Brasil, Itaú e Embracon</p>
         </div>
     </header>
 
@@ -21,7 +21,7 @@
         <div class="container flex">
             <div class="hero-text">
                 <h2>Realize seus planos sem pagar juros abusivos.</h2>
-                <p>Compare as melhores condições do mercado em um só lugar. Consultoria gratuita e personalizada com a Caçula Consórcios.</p>
+                <p>Compare as melhores condições do mercado em um só lugar. Consultoria gratuita e personalizada com a Consórcio M.Braaam.</p>
                 <ul class="benefits-top">
                     <li>✅ Zero Juros</li>
                     <li>✅ Sem Taxa de Adesão</li>
@@ -118,15 +118,15 @@
 
             <div class="atendimento-nacional">
                 <h3>🌎 Atendimento em Todo Território Nacional</h3>
-                <p>Nossa consultoria é 100% digital e segura com a Caçula Consórcios. Atendemos todos os estados do Brasil.</p>
+                <p>Nossa consultoria é 100% digital e segura com a Consórcio M.Braaam. Atendemos todos os estados do Brasil.</p>
                 <div class="badge-brasil">🇧🇷 100% SEGURO</div>
             </div>
         </div>
     </section>
 
-    <footer style="background: #f8f9fa; padding: 40px 20px; text-align: center; border-top: 1px solid #ddd; margin-top: 50px;">
-        <div style="max-width: 1000px; margin: 0 auto; color: #666; font-size: 13px; line-height: 1.6;">
-            <p><strong>© 2026 - M.Braaam Consórcios</strong></p>
+    <footer style="background: #222; color: #999; padding: 40px 0; text-align: center; font-size: 0.9rem;">
+        <div class="container">
+            <p><strong>© 2026 - Consórcio M.Braaam.</strong></p>
             <p>As simulações apresentadas são estimativas. As condições finais dependem da análise de crédito junto às administradoras parceiras.</p>
             <p style="margin: 15px 0;">
                 <a href="#" style="color: #1aa13c; text-decoration: none;">Termos de Uso</a> | 
@@ -141,7 +141,6 @@
     </a>
 
     <script>
-        const selectInteresse = document.getElementById('interest'); // Corrigido para ID do HTML
         const areaValor = document.getElementById('area-valor');
         const rangeValor = document.getElementById('range-valor');
         const valorExibido = document.getElementById('valor-exibido');
@@ -149,10 +148,10 @@
         const maxLabel = document.getElementById('max-label');
 
         const configs = {
-            'Imóvel': { min: 90000, max: 1000000, step: 10000 },
-            'Auto': { min: 30000, max: 150000, step: 5000 },
-            'Moto': { min: 10000, max: 70000, step: 1000 },
-            'Pesados': { min: 150000, max: 350000, step: 10000 }
+            'Imóvel': { min: 100000, max: 7500000, step: 50000 },
+            'Auto': { min: 30000, max: 1500000, step: 10000 },
+            'Moto': { min: 10000, max: 250000, step: 5000 },
+            'Pesados': { min: 150000, max: 2500000, step: 25000 }
         };
 
         function formatarMoeda(v) {
