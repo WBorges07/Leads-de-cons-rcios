@@ -11,9 +11,12 @@
 <body>
 
     <header>
-        <div class="container">
-            <img src="logo.png" alt="Caçula Consórcios" class="main-logo">
-            <p>Representante Autorizado: Banco do Brasil, Itaú e Embracon</p>
+        <div class="container flex-header">
+            <img src="logo.png" alt="Consórcio M.Braaam" class="main-logo">
+            <div class="header-info">
+                <p>Representante Autorizado</p>
+                <span>Banco do Brasil, Itaú e Embracon</span>
+            </div>
         </div>
     </header>
 
@@ -23,9 +26,9 @@
                 <h2>Realize seus planos sem pagar juros abusivos.</h2>
                 <p>Compare as melhores condições do mercado em um só lugar. Consultoria gratuita e personalizada com a Consórcio M.Braaam.</p>
                 <ul class="benefits-top">
-                    <li>✅ Zero Juros</li>
-                    <li>✅ Sem Taxa de Adesão</li>
-                    <li>✅ Aprovação Facilitada</li>
+                    <li><span class="check-icon">✓</span> Zero Juros</li>
+                    <li><span class="check-icon">✓</span> Sem Taxa de Adesão</li>
+                    <li><span class="check-icon">✓</span> Aprovação Facilitada</li>
                 </ul>
             </div>
 
@@ -51,7 +54,7 @@
                         <option value="Pesados">Veículos Pesados</option>
                     </select>
 
-                    <div id="area-valor" style="display: none; margin-top: 15px;">
+                    <div id="area-valor" class="simulador-box" style="display: none;">
                         <label>Valor do Crédito: <span id="valor-exibido">R$ 0,00</span></label>
                         <input type="range" name="valor_pretendido" id="range-valor" min="0" max="100000" step="1000">
                         <div class="range-labels">
@@ -60,7 +63,7 @@
                         </div>
                     </div>
 
-                    <input type="hidden" name="_subject" value="Novo Lead: Caçula Consórcios">
+                    <input type="hidden" name="_subject" value="Novo Lead: M.Braaam Consórcios">
                     <button type="submit" class="btn-submit">SIMULAR VIA WHATSAPP</button>
                 </form>
             </div>
@@ -80,7 +83,7 @@
                     </ul>
                 </div>
 
-                <div class="info-box">
+                <div class="info-box dark-card">
                     <h3>Consórcio vs Financiamento</h3>
                     <table class="comp-table">
                         <thead>
@@ -93,27 +96,31 @@
                         <tbody>
                             <tr>
                                 <td>Juros</td>
-                                <td>Isento</td>
-                                <td>Média 7,5% a 12% a.a.</td>
+                                <td class="text-gold">Isento</td>
+                                <td>7,5% a 12% a.a.</td>
                             </tr>
                             <tr>
                                 <td>Entrada</td>
-                                <td>R$ 0,00</td>
-                                <td>Média 40% do valor</td>
+                                <td class="text-gold">R$ 0,00</td>
+                                <td>Média 40%</td>
                             </tr>
                             <tr>
                                 <td>Custo Final</td>
-                                <td>Baixo</td>
-                                <td>Até 3x o valor do bem</td>
-                            </tr>
-                            <tr>
-                                <td>Prazo máximo</td>
-                                <td>200 meses</td>
-                                <td>420 meses</td>
+                                <td class="text-gold">Baixo</td>
+                                <td>Até 3x o valor</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
+            </div>
+
+            <div class="institutional-gallery">
+                <img src="imagem1.png" alt="Quem Somos M.Braaam">
+                <img src="imagem2.png" alt="Missão Visão Valores">
+                <img src="imagem3.png" alt="Empresas Parceiras">
+                <img src="imagem4.png" alt="Protocolo de Atendimento">
+                <img src="imagem5.png" alt="Segurança Lei 11.795">
+                <img src="imagem6.png" alt="Nossos Dados">
             </div>
 
             <div class="atendimento-nacional">
@@ -124,15 +131,15 @@
         </div>
     </section>
 
-    <footer style="background: #222; color: #999; padding: 40px 0; text-align: center; font-size: 0.9rem;">
+    <footer>
         <div class="container">
             <p><strong>© 2026 - Consórcio M.Braaam.</strong></p>
-            <p>As simulações apresentadas são estimativas. As condições finais dependem da análise de crédito junto às administradoras parceiras.</p>
-            <p style="margin: 15px 0;">
-                <a href="#" style="color: #1aa13c; text-decoration: none;">Termos de Uso</a> | 
-                <a href="#" style="color: #1aa13c; text-decoration: none;">Política de Privacidade</a>
-            </p>
-            <p>Seus dados estão protegidos conforme a LGPD.</p>
+            <p class="disclaimer">As simulações apresentadas são estimativas. As condições finais dependem da análise de crédito junto às administradoras parceiras.</p>
+            <div class="footer-links">
+                <a href="#">Termos de Uso</a>
+                <a href="#">Política de Privacidade</a>
+            </div>
+            <p class="lgpd">Seus dados estão protegidos conforme a LGPD.</p>
         </div>
     </footer>
 
@@ -184,7 +191,7 @@
             const valor = valorExibido.innerText;
             
             const meuNumero = "5511998884144";
-            const msg = `Olá! Meu nome é ${nome}. Quero uma proposta da Caçula Consórcios para ${interesse} no valor de ${valor}.`;
+            const msg = `Olá! Meu nome é ${nome}. Quero uma proposta da M.Braaam para ${interesse} no valor de ${valor}.`;
             const url = `https://wa.me/${meuNumero}?text=${encodeURIComponent(msg)}`;
 
             setTimeout(() => { window.location.href = url; }, 1200);
