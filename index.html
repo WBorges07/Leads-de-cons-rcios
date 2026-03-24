@@ -192,7 +192,6 @@
         });
 
         document.getElementById('formConsorcio').addEventListener('submit', function(e) {
-            // Captura os dados antes de qualquer outra ação
             const nome = document.getElementById('nome').value;
             const interesse = document.getElementById('interesse').value;
             const valor = valorExibido.innerText;
@@ -200,8 +199,6 @@
             const msg = `Olá! Meu nome é ${nome}. Quero uma proposta da M.Braaam para ${interesse} no valor de ${valor}.`;
             const url = `https://wa.me/${meuNumero}?text=${encodeURIComponent(msg)}`;
 
-            // O Formspree enviará os dados por trás, mas para garantir o redirecionamento
-            // Muitos navegadores bloqueiam popups, então o ideal é redirecionar após um breve delay
             setTimeout(() => {
                 window.open(url, '_blank');
             }, 500);
