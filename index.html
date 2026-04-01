@@ -119,7 +119,7 @@
                 <img src="imagem2.png" alt="Missão Visão Valores">
                 <img src="imagem3.png" alt="Empresas Parceiras">
                 <img src="imagem4.png" alt="Protocolo de Atendimento">
-                <img src="imagem5.png" alt="Segurança Lei 11.795">
+                <img src="seguro5.jpg" alt="Segurança Lei 11.795">
                 <img src="imagem6.png" alt="Nossos Dados">
             </div>
 
@@ -153,7 +153,24 @@
         <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
     </a>
 
-    <script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // Configuração do Firebase extraída do seu projeto
+        const firebaseConfig = {
+            apiKey: "AIzaSyAVhQ-6C7jtZrgzibKCJurVciG5L2_zRgs",
+            authDomain: "customers-3bc70.firebaseapp.com",
+            projectId: "customers-3bc70",
+            storageBucket: "customers-3bc70.firebasestorage.app",
+            messagingSenderId: "591091207016",
+            appId: "1:591091207016:web:44234d9033eb650e0d64dd",
+            measurementId: "G-L1VQD35MB3"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
         const areaValor = document.getElementById('area-valor');
         const rangeValor = document.getElementById('range-valor');
         const valorExibido = document.getElementById('valor-exibido');
@@ -191,17 +208,48 @@
             valorExibido.innerText = formatarMoeda(this.value);
         });
 
-        document.getElementById('formConsorcio').addEventListener('submit', function(e) {
-            const nome = document.getElementById('nome').value;
-            const interesse = document.getElementById('interesse').value;
-            const valor = valorExibido.innerText;
-            const meuNumero = "5511998884144";
-            const msg = `Olá! Meu nome é ${nome}. Quero uma proposta da M.Braaam para ${interesse} no valor de ${valor}.`;
-            const url = `https://wa.me/${meuNumero}?text=${encodeURIComponent(msg)}`;
+        // Envio do formulário com integração CRM Elite
+        document.getElementById('formConsorcio').addEventListener('submit', async function(e) {
+            e.preventDefault();
 
-            setTimeout(() => {
-                window.open(url, '_blank');
-            }, 500);
+            const nome = document.getElementById('nome').value;
+            const whatsapp = document.getElementById('whatsapp').value;
+            const email = document.getElementById('email').value;
+            const interesse = document.getElementById('interesse').value;
+            const valorTexto = valorExibido.innerText;
+            const valorNumerico = parseFloat(rangeValor.value);
+
+            // 1. Salva os dados no CRM (Coleção "clientes")
+            try {
+                await addDoc(collection(db, "clientes"), {
+                    nome: nome,
+                    telefone: whatsapp,
+                    email: email,
+                    bemDesejado: interesse,
+                    valorDoBem: valorNumerico,
+                    situacao: "Lead novo",
+                    data: new Date().toLocaleDateString('pt-br'),
+                    createdAt: new Date().getTime(),
+                    vendedor: "Landing Page"
+                });
+            } catch (error) {
+                console.error("Erro ao salvar no CRM:", error);
+            }
+
+            // 2. Abre o WhatsApp
+            const meuNumero = "5511998884144";
+            const msg = `Olá! Meu nome é ${nome}. Quero uma proposta da M.Braaam para ${interesse} no valor de ${valorTexto}.`;
+            window.open(`https://wa.me/${meuNumero}?text=${encodeURIComponent(msg)}`, '_blank');
+
+            // 3. Envia para o Formspree e redireciona
+            const formData = new FormData(this);
+            fetch(this.action, {
+                method: this.method,
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            }).finally(() => {
+                window.location.href = 'obrigado.html';
+            });
         });
     </script>
 </body>
