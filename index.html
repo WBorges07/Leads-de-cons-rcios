@@ -170,6 +170,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        // Lógica do Simulador (Cálculos e Range)
         const areaValor = document.getElementById('area-valor');
         const rangeValor = document.getElementById('range-valor');
         const valorExibido = document.getElementById('valor-exibido');
@@ -207,33 +208,32 @@
             valorExibido.innerText = formatarMoeda(this.value);
         });
 
+        // Envio do formulário unificado
         document.getElementById('formConsorcio').addEventListener('submit', async function(e) {
             e.preventDefault();
             const btn = document.getElementById('btnSubmit');
+            const originalText = btn.innerText;
             btn.innerText = "PROCESSANDO...";
             btn.disabled = true;
 
-            const nome = document.getElementById('nome').value;
-            const tel = document.getElementById('whatsapp').value;
-            const email = document.getElementById('email').value;
-            const interesse = document.getElementById('interesse').value;
-            const valorNumerico = parseFloat(rangeValor.value);
+            const dadosLead = {
+                nome: document.getElementById('nome').value,
+                telefone: document.getElementById('whatsapp').value,
+                email: document.getElementById('email').value,
+                bemDesejado: document.getElementById('interesse').value,
+                valorDoBem: parseFloat(rangeValor.value),
+                situacao: "Lead novo",
+                vendedor: "Landing Page",
+                data: new Date().toLocaleDateString('pt-br'),
+                createdAt: new Date().getTime()
+            };
 
             try {
-                // SALVANDO NA COLEÇÃO "clientes" (Padronizado com o CRM Elite)
-                await addDoc(collection(db, "clientes"), {
-                    nome: nome,
-                    telefone: tel,
-                    email: email,
-                    bemDesejado: interesse,
-                    valorDoBem: valorNumerico,
-                    situacao: "Lead novo",
-                    vendedor: "Site Principal",
-                    data: new Date().toLocaleDateString('pt-br'),
-                    createdAt: new Date().getTime()
-                });
-                
-                // Envio Formspree
+                // Tenta salvar no Firebase na coleção "clientes"
+                const docRef = await addDoc(collection(db, "clientes"), dadosLead);
+                console.log("Sucesso! ID do Lead:", docRef.id);
+
+                // Envio Formspree (em segundo plano)
                 const formData = new FormData(this);
                 fetch(this.action, {
                     method: 'POST',
@@ -241,17 +241,19 @@
                     headers: { 'Accept': 'application/json' }
                 });
 
-                // WhatsApp
-                const msg = `Olá! Meu nome é ${nome}. Quero uma proposta para ${interesse} no valor de ${valorExibido.innerText}.`;
+                // Se salvou, abre o WhatsApp e redireciona
+                const msg = `Olá! Meu nome é ${dadosLead.nome}. Quero uma proposta para ${dadosLead.bemDesejado} no valor de ${valorExibido.innerText}.`;
                 window.open(`https://wa.me/5511998884144?text=${encodeURIComponent(msg)}`, '_blank');
-                
-                // Redirecionamento
                 window.location.href = 'obrigado.html';
 
             } catch (err) {
-                console.error("Erro ao salvar:", err);
-                alert("Erro ao enviar simulação. Verifique sua conexão.");
-                btn.innerText = "SIMULAR VIA WHATSAPP";
+                console.error("Erro detalhado:", err);
+                if (err.message.includes("permissions")) {
+                    alert("ERRO DE PERMISSÃO: Você precisa ajustar as Regras (Rules) no Console do Firebase.");
+                } else {
+                    alert("Erro ao conectar com o banco de dados. Tente novamente.");
+                }
+                btn.innerText = originalText;
                 btn.disabled = false;
             }
         });
