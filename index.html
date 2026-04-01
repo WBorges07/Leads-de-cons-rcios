@@ -157,6 +157,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+        // Configuração do seu Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyAVhQ-6C7jtZrgzibKCJurVciG5L2_zRgs",
             authDomain: "customers-3bc70.firebaseapp.com",
@@ -170,7 +171,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Lógica do Simulador
+        // Elementos do Simulador
         const areaValor = document.getElementById('area-valor');
         const rangeValor = document.getElementById('range-valor');
         const valorExibido = document.getElementById('valor-exibido');
@@ -208,7 +209,7 @@
             valorExibido.innerText = formatarMoeda(this.value);
         });
 
-        // Script de envio unificado para o CRM
+        // Lógica de Envio de Formulário
         document.getElementById('formConsorcio').addEventListener('submit', async function(e) {
             e.preventDefault();
             const btn = document.getElementById('btnSubmit');
@@ -216,36 +217,41 @@
             btn.innerText = "PROCESSANDO...";
             btn.disabled = true;
 
-            const nomeInput = document.getElementById('nome').value;
-            const interesseInput = document.getElementById('interesse').value;
+            const nomeLead = document.getElementById('nome').value;
+            const interesseLead = document.getElementById('interesse').value;
+            const valorNumerico = parseFloat(rangeValor.value) || 0;
 
             const dadosLead = {
-                nome: nomeInput,
+                nome: nomeLead,
                 telefone: document.getElementById('whatsapp').value,
                 email: document.getElementById('email').value,
-                bemDesejado: interesseInput,
-                valorDoBem: parseFloat(rangeValor.value),
-                situacao: "Lead novo", // Valor esperado pela esteira.html
+                bemDesejado: interesseLead,
+                valorDoBem: valorNumerico,
+                situacao: "Lead novo", // Status inicial para a esteira
                 vendedor: "Landing Page",
                 data: new Date().toLocaleDateString('pt-br'),
                 createdAt: new Date().getTime()
             };
 
             try {
-                // Envia para a coleção "clientes" usada na esteira/equipe
+                // Salva no Firebase (Coleção: clientes)
                 await addDoc(collection(db, "clientes"), dadosLead);
-                console.log("Sucesso no Firebase");
-
-                // WhatsApp
-                const msg = `Olá! Meu nome é ${dadosLead.nome}. Quero uma proposta para ${dadosLead.bemDesejado} no valor de ${valorExibido.innerText}.`;
-                window.open(`https://wa.me/5511998884144?text=${encodeURIComponent(msg)}`, '_blank');
                 
-                // Redireciona
+                // Envio Formspree (Segundo plano)
+                fetch(this.action, {
+                    method: 'POST',
+                    body: new FormData(this),
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                // WhatsApp e Redirecionamento
+                const msg = `Olá! Meu nome é ${nomeLead}. Quero uma proposta para ${interesseLead} no valor de ${valorExibido.innerText}.`;
+                window.open(`https://wa.me/5511998884144?text=${encodeURIComponent(msg)}`, '_blank');
                 window.location.href = 'obrigado.html';
 
             } catch (err) {
-                console.error("Erro Firebase:", err);
-                alert("Erro ao conectar com o CRM. Verifique as Regras de Segurança no console do Firebase.");
+                console.error("Erro ao salvar:", err);
+                alert("Erro ao enviar dados. Verifique as configurações de segurança do banco de dados.");
                 btn.innerText = originalText;
                 btn.disabled = false;
             }
