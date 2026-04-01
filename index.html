@@ -170,7 +170,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Lógica do Simulador (Cálculos e Range)
+        // Lógica do Simulador
         const areaValor = document.getElementById('area-valor');
         const rangeValor = document.getElementById('range-valor');
         const valorExibido = document.getElementById('valor-exibido');
@@ -208,7 +208,7 @@
             valorExibido.innerText = formatarMoeda(this.value);
         });
 
-        // Envio do formulário unificado
+        // Script de envio unificado para o CRM
         document.getElementById('formConsorcio').addEventListener('submit', async function(e) {
             e.preventDefault();
             const btn = document.getElementById('btnSubmit');
@@ -216,43 +216,36 @@
             btn.innerText = "PROCESSANDO...";
             btn.disabled = true;
 
+            const nomeInput = document.getElementById('nome').value;
+            const interesseInput = document.getElementById('interesse').value;
+
             const dadosLead = {
-                nome: document.getElementById('nome').value,
+                nome: nomeInput,
                 telefone: document.getElementById('whatsapp').value,
                 email: document.getElementById('email').value,
-                bemDesejado: document.getElementById('interesse').value,
+                bemDesejado: interesseInput,
                 valorDoBem: parseFloat(rangeValor.value),
-                situacao: "Lead novo",
+                situacao: "Lead novo", // Valor esperado pela esteira.html
                 vendedor: "Landing Page",
                 data: new Date().toLocaleDateString('pt-br'),
                 createdAt: new Date().getTime()
             };
 
             try {
-                // Tenta salvar no Firebase na coleção "clientes"
-                const docRef = await addDoc(collection(db, "clientes"), dadosLead);
-                console.log("Sucesso! ID do Lead:", docRef.id);
+                // Envia para a coleção "clientes" usada na esteira/equipe
+                await addDoc(collection(db, "clientes"), dadosLead);
+                console.log("Sucesso no Firebase");
 
-                // Envio Formspree (em segundo plano)
-                const formData = new FormData(this);
-                fetch(this.action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: { 'Accept': 'application/json' }
-                });
-
-                // Se salvou, abre o WhatsApp e redireciona
+                // WhatsApp
                 const msg = `Olá! Meu nome é ${dadosLead.nome}. Quero uma proposta para ${dadosLead.bemDesejado} no valor de ${valorExibido.innerText}.`;
                 window.open(`https://wa.me/5511998884144?text=${encodeURIComponent(msg)}`, '_blank');
+                
+                // Redireciona
                 window.location.href = 'obrigado.html';
 
             } catch (err) {
-                console.error("Erro detalhado:", err);
-                if (err.message.includes("permissions")) {
-                    alert("ERRO DE PERMISSÃO: Você precisa ajustar as Regras (Rules) no Console do Firebase.");
-                } else {
-                    alert("Erro ao conectar com o banco de dados. Tente novamente.");
-                }
+                console.error("Erro Firebase:", err);
+                alert("Erro ao conectar com o CRM. Verifique as Regras de Segurança no console do Firebase.");
                 btn.innerText = originalText;
                 btn.disabled = false;
             }
