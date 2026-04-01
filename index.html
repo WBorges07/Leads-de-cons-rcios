@@ -157,7 +157,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // Configuração do Firebase extraída do seu projeto
         const firebaseConfig = {
             apiKey: "AIzaSyAVhQ-6C7jtZrgzibKCJurVciG5L2_zRgs",
             authDomain: "customers-3bc70.firebaseapp.com",
@@ -171,6 +170,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        // Lógica do Simulador
         const areaValor = document.getElementById('area-valor');
         const rangeValor = document.getElementById('range-valor');
         const valorExibido = document.getElementById('valor-exibido');
@@ -208,40 +208,39 @@
             valorExibido.innerText = formatarMoeda(this.value);
         });
 
-        // Envio do formulário com integração CRM Elite
+        // Envio do Lead
         document.getElementById('formConsorcio').addEventListener('submit', async function(e) {
             e.preventDefault();
 
             const nome = document.getElementById('nome').value;
-            const whatsapp = document.getElementById('whatsapp').value;
+            const tel = document.getElementById('whatsapp').value;
             const email = document.getElementById('email').value;
             const interesse = document.getElementById('interesse').value;
             const valorTexto = valorExibido.innerText;
             const valorNumerico = parseFloat(rangeValor.value);
 
-            // 1. Salva os dados no CRM (Coleção "clientes")
+            // 1. SALVAR NO CRM (Coleção "customers")
             try {
-                await addDoc(collection(db, "clientes"), {
+                await addDoc(collection(db, "customers"), {
                     nome: nome,
-                    telefone: whatsapp,
+                    telefone: tel,
                     email: email,
                     bemDesejado: interesse,
                     valorDoBem: valorNumerico,
                     situacao: "Lead novo",
                     data: new Date().toLocaleDateString('pt-br'),
                     createdAt: new Date().getTime(),
-                    vendedor: "Landing Page"
+                    vendedor: "Site Principal"
                 });
-            } catch (error) {
-                console.error("Erro ao salvar no CRM:", error);
+            } catch (err) {
+                console.error("Erro CRM:", err);
             }
 
-            // 2. Abre o WhatsApp
-            const meuNumero = "5511998884144";
-            const msg = `Olá! Meu nome é ${nome}. Quero uma proposta da M.Braaam para ${interesse} no valor de ${valorTexto}.`;
-            window.open(`https://wa.me/${meuNumero}?text=${encodeURIComponent(msg)}`, '_blank');
+            // 2. WHATSAPP
+            const msg = `Olá! Meu nome é ${nome}. Quero uma proposta para ${interesse} no valor de ${valorTexto}.`;
+            window.open(`https://wa.me/5511998884144?text=${encodeURIComponent(msg)}`, '_blank');
 
-            // 3. Envia para o Formspree e redireciona
+            // 3. FORMSPREE E REDIRECIONAMENTO
             const formData = new FormData(this);
             fetch(this.action, {
                 method: this.method,
