@@ -170,7 +170,6 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Lógica do Simulador
         const areaValor = document.getElementById('area-valor');
         const rangeValor = document.getElementById('range-valor');
         const valorExibido = document.getElementById('valor-exibido');
@@ -208,11 +207,10 @@
             valorExibido.innerText = formatarMoeda(this.value);
         });
 
-        // ENVIO DO LEAD - CORREÇÃO DA COLEÇÃO PARA "clientes"
         document.getElementById('formConsorcio').addEventListener('submit', async function(e) {
             e.preventDefault();
             const btn = document.getElementById('btnSubmit');
-            btn.innerText = "ENVIANDO...";
+            btn.innerText = "PROCESSANDO...";
             btn.disabled = true;
 
             const nome = document.getElementById('nome').value;
@@ -222,8 +220,7 @@
             const valorNumerico = parseFloat(rangeValor.value);
 
             try {
-                // CORREÇÃO CRÍTICA: Alterado de "customers" para "clientes"
-                // para bater com o que a esteira.html e equipe.html lêem.
+                // SALVANDO NA COLEÇÃO "clientes" (Padronizado com o CRM Elite)
                 await addDoc(collection(db, "clientes"), {
                     nome: nome,
                     telefone: tel,
@@ -236,7 +233,7 @@
                     createdAt: new Date().getTime()
                 });
                 
-                // Envio Formspree em paralelo
+                // Envio Formspree
                 const formData = new FormData(this);
                 fetch(this.action, {
                     method: 'POST',
@@ -244,16 +241,16 @@
                     headers: { 'Accept': 'application/json' }
                 });
 
-                // Abrir WhatsApp
+                // WhatsApp
                 const msg = `Olá! Meu nome é ${nome}. Quero uma proposta para ${interesse} no valor de ${valorExibido.innerText}.`;
                 window.open(`https://wa.me/5511998884144?text=${encodeURIComponent(msg)}`, '_blank');
                 
-                // Redirecionar
+                // Redirecionamento
                 window.location.href = 'obrigado.html';
 
             } catch (err) {
-                console.error("Erro Firebase:", err);
-                alert("Erro ao salvar dados. Tente novamente.");
+                console.error("Erro ao salvar:", err);
+                alert("Erro ao enviar simulação. Verifique sua conexão.");
                 btn.innerText = "SIMULAR VIA WHATSAPP";
                 btn.disabled = false;
             }
