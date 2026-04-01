@@ -64,7 +64,7 @@
                     </div>
 
                     <input type="hidden" name="_subject" value="Novo Lead: M.Braaam Consórcios">
-                    <button type="submit" class="btn-submit">SIMULAR VIA WHATSAPP</button>
+                    <button type="submit" id="btnSubmit" class="btn-submit">SIMULAR VIA WHATSAPP</button>
                 </form>
             </div>
         </div>
@@ -170,7 +170,6 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Lógica do Simulador
         const areaValor = document.getElementById('area-valor');
         const rangeValor = document.getElementById('range-valor');
         const valorExibido = document.getElementById('valor-exibido');
@@ -208,9 +207,12 @@
             valorExibido.innerText = formatarMoeda(this.value);
         });
 
-        // Envio do Lead
+        // Envio do Lead - LÓGICA REVISADA
         document.getElementById('formConsorcio').addEventListener('submit', async function(e) {
             e.preventDefault();
+            const btn = document.getElementById('btnSubmit');
+            btn.innerText = "PROCESSANDO...";
+            btn.disabled = true;
 
             const nome = document.getElementById('nome').value;
             const tel = document.getElementById('whatsapp').value;
@@ -219,8 +221,8 @@
             const valorTexto = valorExibido.innerText;
             const valorNumerico = parseFloat(rangeValor.value);
 
-            // 1. SALVAR NO CRM (Coleção "customers")
             try {
+                // 1. SALVAR NO FIREBASE (CRM ELITE) - Espera concluir antes de seguir
                 await addDoc(collection(db, "customers"), {
                     nome: nome,
                     telefone: tel,
@@ -232,23 +234,27 @@
                     createdAt: new Date().getTime(),
                     vendedor: "Site Principal"
                 });
+                console.log("Lead salvo no CRM com sucesso.");
             } catch (err) {
-                console.error("Erro CRM:", err);
+                console.error("Erro ao salvar no CRM:", err);
             }
 
-            // 2. WHATSAPP
-            const msg = `Olá! Meu nome é ${nome}. Quero uma proposta para ${interesse} no valor de ${valorTexto}.`;
-            window.open(`https://wa.me/5511998884144?text=${encodeURIComponent(msg)}`, '_blank');
-
-            // 3. FORMSPREE E REDIRECIONAMENTO
+            // 2. DISPARAR FORMSPREE EM SEGUNDO PLANO
             const formData = new FormData(this);
             fetch(this.action, {
                 method: this.method,
                 body: formData,
                 headers: { 'Accept': 'application/json' }
-            }).finally(() => {
-                window.location.href = 'obrigado.html';
             });
+
+            // 3. ABRIR WHATSAPP
+            const msg = `Olá! Meu nome é ${nome}. Quero uma proposta para ${interesse} no valor de ${valorTexto}.`;
+            window.open(`https://wa.me/5511998884144?text=${encodeURIComponent(msg)}`, '_blank');
+
+            // 4. REDIRECIONAR PARA OBRIGADO
+            setTimeout(() => {
+                window.location.href = 'obrigado.html';
+            }, 500);
         });
     </script>
 </body>
