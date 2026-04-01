@@ -170,7 +170,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Lógica do Simulador (Inalterada)
+        // Lógica do Simulador
         const areaValor = document.getElementById('area-valor');
         const rangeValor = document.getElementById('range-valor');
         const valorExibido = document.getElementById('valor-exibido');
@@ -208,13 +208,11 @@
             valorExibido.innerText = formatarMoeda(this.value);
         });
 
-        // ENVIO DO LEAD - LÓGICA DE ALTA CONFIABILIDADE
+        // ENVIO DO LEAD - CORREÇÃO DA COLEÇÃO PARA "clientes"
         document.getElementById('formConsorcio').addEventListener('submit', async function(e) {
             e.preventDefault();
             const btn = document.getElementById('btnSubmit');
-            const originalText = btn.innerText;
-            
-            btn.innerText = "SALVANDO...";
+            btn.innerText = "ENVIANDO...";
             btn.disabled = true;
 
             const nome = document.getElementById('nome').value;
@@ -224,41 +222,41 @@
             const valorNumerico = parseFloat(rangeValor.value);
 
             try {
-                // 1. SALVAR NO FIREBASE (CRM ELITE)
-                // Usando a coleção 'customers' que é a padrão do seu sistema
-                await addDoc(collection(db, "customers"), {
+                // CORREÇÃO CRÍTICA: Alterado de "customers" para "clientes"
+                // para bater com o que a esteira.html e equipe.html lêem.
+                await addDoc(collection(db, "clientes"), {
                     nome: nome,
                     telefone: tel,
                     email: email,
                     bemDesejado: interesse,
                     valorDoBem: valorNumerico,
                     situacao: "Lead novo",
-                    vendedor: "Landing Page",
+                    vendedor: "Site Principal",
                     data: new Date().toLocaleDateString('pt-br'),
                     createdAt: new Date().getTime()
                 });
-                console.log("Lead registrado no Firebase.");
+                
+                // Envio Formspree em paralelo
+                const formData = new FormData(this);
+                fetch(this.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                // Abrir WhatsApp
+                const msg = `Olá! Meu nome é ${nome}. Quero uma proposta para ${interesse} no valor de ${valorExibido.innerText}.`;
+                window.open(`https://wa.me/5511998884144?text=${encodeURIComponent(msg)}`, '_blank');
+                
+                // Redirecionar
+                window.location.href = 'obrigado.html';
+
             } catch (err) {
-                console.error("Erro ao salvar no CRM:", err);
-                alert("Erro ao conectar com o servidor. Verifique sua internet.");
-                btn.innerText = originalText;
+                console.error("Erro Firebase:", err);
+                alert("Erro ao salvar dados. Tente novamente.");
+                btn.innerText = "SIMULAR VIA WHATSAPP";
                 btn.disabled = false;
-                return;
             }
-
-            // 2. ENVIAR PARA O FORMSPREE (Opcional, em segundo plano)
-            const formData = new FormData(this);
-            fetch(this.action, {
-                method: 'POST',
-                body: formData,
-                headers: { 'Accept': 'application/json' }
-            });
-
-            // 3. ABRIR WHATSAPP E REDIRECIONAR
-            const msg = `Olá! Meu nome é ${nome}. Quero uma proposta para ${interesse} no valor de ${valorExibido.innerText}.`;
-            window.open(`https://wa.me/5511998884144?text=${encodeURIComponent(msg)}`, '_blank');
-            
-            window.location.href = 'obrigado.html';
         });
     </script>
 </body>
