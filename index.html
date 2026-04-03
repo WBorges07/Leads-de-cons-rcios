@@ -220,6 +220,7 @@
             const nomeLead = document.getElementById('nome').value;
             const interesseLead = document.getElementById('interesse').value;
             const valorNumerico = parseFloat(rangeValor.value) || 0;
+            const valorFormatado = valorExibido.innerText;
 
             const dadosLead = {
                 nome: nomeLead,
@@ -227,31 +228,37 @@
                 email: document.getElementById('email').value,
                 bemDesejado: interesseLead,
                 valorDoBem: valorNumerico,
-                situacao: "Lead novo", // Status inicial para a esteira
+                situacao: "Lead novo", // Status inicial para a esteira do CRM
                 vendedor: "Landing Page",
                 data: new Date().toLocaleDateString('pt-br'),
-                createdAt: new Date().getTime()
+                timestamp: Date.now(), // Usado pelo CRM para ordenar a tabela
+                proximoPrazo: ""
             };
 
             try {
-                // Salva no Firebase (Coleção: clientes)
+                // 1. Salva no Firebase (Coleção: clientes)
                 await addDoc(collection(db, "clientes"), dadosLead);
-                
-                // Envio Formspree (Segundo plano)
+                console.log("Salvo no CRM com sucesso");
+
+                // 2. Envio Formspree (Segundo plano)
                 fetch(this.action, {
                     method: 'POST',
                     body: new FormData(this),
                     headers: { 'Accept': 'application/json' }
-                });
+                }).catch(e => console.log("Formspree bypass"));
 
-                // WhatsApp e Redirecionamento
-                const msg = `Olá! Meu nome é ${nomeLead}. Quero uma proposta para ${interesseLead} no valor de ${valorExibido.innerText}.`;
+                // 3. WhatsApp e Redirecionamento
+                const msg = `Olá! Meu nome é ${nomeLead}. Quero uma proposta para ${interesseLead} no valor de ${valorFormatado}.`;
                 window.open(`https://wa.me/5511998884144?text=${encodeURIComponent(msg)}`, '_blank');
-                window.location.href = 'obrigado.html';
+                
+                // Pequeno delay para garantir que o WhatsApp abra antes de mudar a página
+                setTimeout(() => {
+                    window.location.href = 'obrigado.html';
+                }, 1000);
 
             } catch (err) {
                 console.error("Erro ao salvar:", err);
-                alert("Erro ao enviar dados. Verifique as configurações de segurança do banco de dados.");
+                alert("Erro ao enviar dados para o CRM. Verifique se as permissões do Firebase estão corretas.");
                 btn.innerText = originalText;
                 btn.disabled = false;
             }
